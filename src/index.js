@@ -5,7 +5,6 @@ import { fetchImages } from './fetchImages';
 
 const searchForm = document.getElementById('search-form');
 const gallery = document.querySelector('.gallery');
-const loadMoreBtn = document.querySelector('.load-more');
 
 let query = '';
 let page = 1;
@@ -13,7 +12,7 @@ let simpleLightBox;
 const per_page = 40;
 
 searchForm.addEventListener('submit', onSearchForm)
-loadMoreBtn.addEventListener('click', onLoadMore)
+
 
 function renderGallery(images) {
   if (!gallery) {
@@ -59,8 +58,6 @@ function renderGallery(images) {
 }
 
 function onSearchForm(evt) {
-
-  loadMoreBtn.classList.add('is-hidden');
   evt.preventDefault();
 
   page = 1;
@@ -83,7 +80,6 @@ function onSearchForm(evt) {
         renderGallery(data.hits);
         simpleLightBox = new SimpleLightbox('.gallery a').refresh();
         Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
-        loadMoreBtn.classList.remove('is-hidden');
       }
     })
     .catch(error => console.log(error))
@@ -94,9 +90,7 @@ function onSearchForm(evt) {
 
 function onLoadMore() {
 
-  loadMoreBtn.classList.add('is-hidden');
   page += 1;
-
   simpleLightBox.destroy();
   // simpleLightBox.refresh();
   fetchImages(query, page, per_page)
@@ -109,6 +103,7 @@ function onLoadMore() {
           "We're sorry, but you've reached the end of search results.",
         );
       }
+       
     })
     .catch(error => console.log(error));
 }
@@ -122,7 +117,6 @@ function checkIfEndOfPage() {
 
 function showLoadMorePage() {
   if (checkIfEndOfPage()) {
-
     onLoadMore();
   }
 }
