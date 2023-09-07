@@ -6,6 +6,7 @@ import { fetchImages } from './fetchImages';
 const searchForm = document.getElementById('search-form');
 const gallery = document.querySelector('.gallery');
 
+
 let query = '';
 let page = 1;
 let simpleLightBox;
